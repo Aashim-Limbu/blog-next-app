@@ -8,7 +8,7 @@ function page() {
 	return (
 		<>
 			<div className="font-semibold text-xl py-2">Posts:</div>
-			<Suspense fallback={<Loading count={6}/>}>
+			<Suspense fallback={<Loading count={6} />}>
 				<PostList />
 			</Suspense>
 		</>
