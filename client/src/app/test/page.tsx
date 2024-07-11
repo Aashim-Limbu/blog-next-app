@@ -1,32 +1,27 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import {
-	ChangeEvent,
-	HTMLInputTypeAttribute,
-	useEffect,
-	useState,
-} from "react";
+import { ChangeEvent, Suspense } from "react";
 
 export default function Page() {
+	return (
+		<>
+			<Suspense fallback={"Loading.."}>
+				<Search />
+			</Suspense>
+		</>
+	);
+}
+
+async function Search() {
 	const pathname = usePathname();
 	const router = useRouter();
 	const searchParam = useSearchParams();
 
-	const [query, setQuery] = useState(searchParam.get("query") || "");
-
-	// useEffect(() => {
-	// 	const queryString = searchParam.get("query") || "";
-	// 	if (queryString !== query) {
-	// 		setQuery(queryString);
-	// 	}
-	// }, [searchParam]);
-
 	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const inputValue = e.target.value;
-		setQuery(inputValue);
 
-		const queryInput = new URLSearchParams(searchParam);    //doing this we can use the method of .get .set .delete and other stuff etc
+		const queryInput = new URLSearchParams(searchParam);
 		if (inputValue) {
 			queryInput.set("query", inputValue);
 		} else {
@@ -35,9 +30,13 @@ export default function Page() {
 		router.push(`${pathname}?${queryInput.toString()}`);
 	};
 
+
 	return (
-		<>
-			<input type="text" value={query} onChange={handleChange} />
-		</>
+		<input
+			type="text"
+			value={searchParam.get("query") || ""}
+			onChange={handleChange}
+		/>
 	);
 }
+

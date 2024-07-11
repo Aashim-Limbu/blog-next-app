@@ -1,6 +1,7 @@
-import { useState } from "react";
-"use client"
 export default function Home() {
-    console.log("Home")
-	return <main className="text-xl font-semibold">This is Home Page </main>;
+	return (
+		<main className="text-xl font-semibold">
+			<h2>This is Home Page</h2>
+		</main>
+	);
 }
